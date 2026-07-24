@@ -116,8 +116,9 @@ prefixIcon: const Icon(Icons.lock_outline),
 ),
 
   const SizedBox(height: 20),
-TextField(
-obscureText: _isConfirmPasswordHidden,
+  TextField(
+    controller: _confirmPasswordController,
+    obscureText: _isConfirmPasswordHidden,
 decoration: InputDecoration(
 hintText: "Confirm Password",
 prefixIcon: const Icon(Icons.lock_outline),
@@ -173,13 +174,22 @@ content: Text("Please enter your email"),
 return;
 }
 
-if (_passwordController.text.trim().isEmpty) {
-ScaffoldMessenger.of(context).showSnackBar(
-const SnackBar(
-content: Text("Please enter your password"),
-),
-);
-return;
+if (_confirmPasswordController.text.trim().isEmpty) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text("Please confirm your password"),
+    ),
+  );
+  return;
+}
+
+if (_passwordController.text != _confirmPasswordController.text) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text("Passwords do not match"),
+    ),
+  );
+  return;
 }
 
 ScaffoldMessenger.of(context).showSnackBar(
