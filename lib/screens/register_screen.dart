@@ -165,13 +165,14 @@ content: Text("Please enter your full name"),
 return;
 }
 
-if (_emailController.text.trim().isEmpty) {
-ScaffoldMessenger.of(context).showSnackBar(
-const SnackBar(
-content: Text("Please enter your email"),
-),
-);
-return;
+if (!_emailController.text.contains('@') ||
+    !_emailController.text.contains('.')) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text("Please enter a valid email"),
+    ),
+  );
+  return;
 }
 
 if (_confirmPasswordController.text.trim().isEmpty) {
@@ -182,7 +183,14 @@ if (_confirmPasswordController.text.trim().isEmpty) {
   );
   return;
 }
-
+if (_passwordController.text.length < 6) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text("Password must be at least 6 characters"),
+    ),
+  );
+  return;
+}
 if (_passwordController.text != _confirmPasswordController.text) {
   ScaffoldMessenger.of(context).showSnackBar(
     const SnackBar(
